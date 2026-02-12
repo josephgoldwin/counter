@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Counter App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="font-family: sans-serif; text-align: center; margin-top: 80px;">
+
+    <h1 id="count">{{ value }}</h1>
+
+    <button onclick="increment()" style="font-size: 24px; padding: 10px 20px;">
+        +
+    </button>
+
+    <script>
+        function increment() {
+            fetch("/increment/", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("count").innerText = data.value;
+            });
+        }
+    </script>
+
+</body>
+</html>
